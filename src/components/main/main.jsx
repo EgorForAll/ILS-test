@@ -5,7 +5,7 @@ import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { togglePoint } from "../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const Main = () => {
   const { routes, currentPoint } = useSelector((state) => state);
