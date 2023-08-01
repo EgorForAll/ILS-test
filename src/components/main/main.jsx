@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import Map from "../map/map";
 import { FlagOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { togglePoint } from "../../store/actions/actions";
@@ -11,7 +12,6 @@ const Main = () => {
   const dispatch = useDispatch();
   const toTogglePoint = (point) => dispatch(togglePoint(point));
   const [collapsed, setCollapsed] = useState(false);
-  const mapRef = useRef();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -39,17 +39,15 @@ const Main = () => {
             <Breadcrumb.Item>{routes[currentPoint - 1].name}</Breadcrumb.Item>
           </Breadcrumb>
           <div
-            ref={mapRef}
             style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
+              width: "100%",
+              height: "700px",
+              position: "relative",
             }}
-          />
+          >
+            <Map routes={routes} currentPoint={currentPoint} />
+          </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
