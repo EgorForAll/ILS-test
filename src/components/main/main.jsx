@@ -45,7 +45,7 @@ const Main = () => {
               position: "relative",
             }}
           >
-            <Map routes={routes} currentPoint={currentPoint} />
+            <Map route={routes[currentPoint - 1]} />
           </div>
         </Content>
       </Layout>
