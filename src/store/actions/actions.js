@@ -6,16 +6,14 @@ export const ActionType = {
   FIND_DRIVING_WAY: "find driving way",
 };
 
-export const fetchRoutes = createAction(ActionType.LOAD_ROUTES, (routes) => {
-  return {
-    payload: routes,
-  };
+export const fetchRoutes = (routes) => ({
+  type: ActionType.LOAD_ROUTES,
+  payload: routes,
 });
 
-export const togglePoint = createAction(ActionType.TOGGLE_POINT, (point) => {
-  return {
-    payload: point,
-  };
+export const togglePoint = (point) => ({
+  type: ActionType.TOGGLE_POINT,
+  payload: point,
 });
 
 export const findWay = createAction(ActionType.FIND_DRIVING_WAY, (way) => {

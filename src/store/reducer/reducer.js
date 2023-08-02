@@ -1,5 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { fetchRoutes, togglePoint, findWay } from "../actions/actions";
+import { ActionType } from "../actions/actions";
 
 const initialState = {
   routes: [],
@@ -7,14 +6,15 @@ const initialState = {
   drivingWay: "",
 };
 
-export const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(fetchRoutes, (state, action) => {
-    state.routes = action.payload;
-  });
-  builder.addCase(togglePoint, (state, action) => {
-    state.currentPoint = action.payload;
-  });
-  builder.addCase(findWay, (state, action) => {
-    state.drivingWay = action.payload;
-  });
-});
+export const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ActionType.LOAD_ROUTES:
+      return { ...state, routes: action.payload };
+    case ActionType.TOGGLE_POINT:
+      return { ...state, currentPoint: action.payload };
+    case ActionType.FIND_DRIVING_WAY:
+      return { ...state, drivingWay: action.payload };
+    default:
+      return { ...state };
+  }
+};
