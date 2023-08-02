@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet-routing-machine";
 import polyline from "@mapbox/polyline";
-import marker from "../../assets/marker.svg";
+import { customIcon } from "../ui/customIcon";
+import { fetchWay } from "../../store/actions/api-actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createUrl, createPolyline } from "../../utils/utils";
 
 export const LeafletParameters = {
   TILE_LAYER: `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,
@@ -12,6 +14,9 @@ export const LeafletParameters = {
 
 const Map = ({ route }) => {
   const mapRef = useRef();
+  const dispatch = useDispatch();
+  const { drivingWay } = useSelector((state) => state);
+  const onFetchDrivingRoute = (url) => dispatch(fetchWay(url));
 
   useEffect(() => {
     const middlePoint = route.way[Math.floor(route.way.length / 2)];
@@ -35,18 +40,6 @@ const Map = ({ route }) => {
     const markerGroup = L.layerGroup().addTo(mapRef.current);
 
     route.way.forEach((point) => {
-      const customIcon = L.icon({
-        iconUrl: marker,
-        iconRetinaUrl: marker,
-        iconAnchor: [30, 63],
-        popupAnchor: null,
-        shadowUrl: null,
-        shadowSize: null,
-        shadowAnchor: null,
-        iconSize: new L.Point(60, 75),
-        className: "map-icon",
-      });
-
       L.marker(
         {
           lat: point.lat,
@@ -66,26 +59,13 @@ const Map = ({ route }) => {
   }, [route]);
 
   useEffect(() => {
-    const createUrl = () => {
-      let points = [];
-      for (let point of route.way) {
-        points.push(`${point.lng},${point.lat}`);
-      }
-      let coords = points.join(";");
-
-      return `http://router.project-osrm.org/route/v1/driving/${coords}?overview=full`;
-    };
-    const url = createUrl();
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        L.polyline(polyline.decode(res.routes[0].geometry)).addTo(
-          mapRef.current
-        );
-      });
+    const url = createUrl(route.way);
+    onFetchDrivingRoute(url);
   }, [route]);
+
+  useEffect(() => {
+    L.polyline(polyline.decode(drivingWay)).addTo(mapRef.current);
+  }, [drivingWay]);
 
   return (
     <div id="map" ref={mapRef} style={{ width: "100%", height: "700px" }}></div>
