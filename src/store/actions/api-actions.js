@@ -1,9 +1,8 @@
-import { findWay } from "./actions";
-import { createPolyline } from "../../utils/utils";
+import { fetchDriveRoute } from "./actions";
 
 export const fetchWay = (url) => (dispatch, _getState, api) => {
   api
     .get(url)
-    .then(({ data }) => dispatch(findWay(data.routes[0].geometry)))
-    .catch((err) => console.log(err));
+    .then(({ data }) => dispatch(fetchDriveRoute(data.routes[0].geometry)))
+    .catch(() => alert("Возникла проблема с подключением к сети Интернет"));
 };

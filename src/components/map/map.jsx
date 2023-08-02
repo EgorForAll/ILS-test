@@ -5,7 +5,7 @@ import polyline from "@mapbox/polyline";
 import { customIcon } from "../ui/customIcon";
 import { fetchWay } from "../../store/actions/api-actions";
 import { useDispatch, useSelector } from "react-redux";
-import { createUrl, createPolyline } from "../../utils/utils";
+import { createUrl } from "../../utils/utils";
 
 export const LeafletParameters = {
   TILE_LAYER: `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,

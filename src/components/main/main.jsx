@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Map from "../map/map";
 import { FlagOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu } from "antd";
-import { togglePoint } from "../../store/actions/actions";
+import { toggleRoutes } from "../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const { Content, Sider } = Layout;
@@ -10,7 +10,7 @@ const { Content, Sider } = Layout;
 const Main = () => {
   const { routes, currentPoint } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const toTogglePoint = (point) => dispatch(togglePoint(point));
+  const toTogglePoint = (point) => dispatch(toggleRoutes(point));
   const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (point) => {

@@ -1,15 +1,15 @@
-import "../../css/style.css";
+import "../../css/style.scss";
 import { ConfigProvider } from "antd";
 import Main from "../main/main";
 import { useDispatch } from "react-redux";
 import { routes } from "../../const";
-import { fetchRoutes } from "../../store/actions/actions";
+import { setRoutes } from "../../store/actions/actions";
 
 function App() {
   const dispatch = useDispatch();
-  dispatch(fetchRoutes(routes));
+  dispatch(setRoutes(routes));
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: "#00b96b" } }}>
+    <ConfigProvider>
       <div className="app">
         <Main />
       </div>

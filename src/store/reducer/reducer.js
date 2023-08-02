@@ -8,7 +8,7 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.LOAD_ROUTES:
+    case ActionType.SET_ROUTES:
       return { ...state, routes: action.payload };
     case ActionType.TOGGLE_POINT:
       return { ...state, currentPoint: action.payload };
