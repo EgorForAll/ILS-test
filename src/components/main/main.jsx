@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Map from "../map/map";
 import { FlagOutlined } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu } from "antd";
 import { togglePoint } from "../../store/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,9 +12,13 @@ const Main = () => {
   const dispatch = useDispatch();
   const toTogglePoint = (point) => dispatch(togglePoint(point));
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+
+  const isActive = (point) => {
+    const wayNumber = Number(point.name.slice(8));
+    if (wayNumber === currentPoint) {
+      return "green";
+    }
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -26,7 +30,11 @@ const Main = () => {
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={["0"]} mode="inline">
           {routes.map((item) => (
-            <Menu.Item key={item.id} onClick={() => toTogglePoint(item.id)}>
+            <Menu.Item
+              key={item.id}
+              onClick={() => toTogglePoint(item.id)}
+              style={{ backgroundColor: isActive(item) }}
+            >
               <FlagOutlined />
               <span>{item.name}</span>
             </Menu.Item>
